@@ -31,7 +31,11 @@ body {
   white-space: pre-wrap;
   padding: 2rem;
 }
-body > * { position: relative; z-index: 1; }
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
 
 /* Header */
 header {
@@ -49,14 +53,10 @@ header {
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
-/* Navigation Menu */
-nav {
-  display: flex;
-  align-items: center;
-}
 nav ul {
   list-style: none;
   display: flex;
+  align-items: center;
 }
 nav ul li {
   position: relative;
@@ -71,7 +71,7 @@ nav a {
 }
 nav a:hover { opacity: 0.8; }
 
-/* Dropdown Styles */
+/* Dropdown styles */
 nav ul li ul {
   display: none;
   position: absolute;
@@ -81,12 +81,27 @@ nav ul li ul {
   min-width: 180px;
   border-radius: 4px;
   overflow: hidden;
+  z-index: 100;
 }
 nav ul li:hover ul {
   display: block;
 }
 nav ul li ul li a {
   padding: 0.8rem 1rem;
+}
+
+/* Hamburger menu toggle */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin: 4px 0;
+  border-radius: 2px;
 }
 
 /* Hero Section */
@@ -100,6 +115,7 @@ nav ul li ul li a {
   color: white;
   position: relative;
 }
+
 .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
 .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
@@ -163,14 +179,21 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hero h2 { font-size: 2rem; }
-  header h1 { font-size: 1.4rem; }
+  header {
+    flex-wrap: wrap;
+  }
+  .menu-toggle { display: flex; }
   nav ul {
     flex-direction: column;
+    display: none;
+    width: 100%;
+    background: #0d6efd;
   }
+  nav ul.active { display: flex; }
   nav ul li ul {
     position: static;
   }
+  nav ul li:hover ul { display: none; }
 }
 </style>
 </head>
@@ -195,8 +218,16 @@ console.log(`${brand} - ${mission}`);
     <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
+
+  <!-- Hamburger menu -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
   <nav>
-    <ul>
+    <ul id="nav-menu">
       <li><a href="#">Process</a>
         <ul>
           <li><a href="#">Step 1</a></li>
@@ -258,6 +289,12 @@ console.log(`${brand} - ${mission}`);
 <footer>
   <p>&copy; 2025 BRAND INTEGER. All rights reserved.</p>
 </footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("nav-menu").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>
