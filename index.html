@@ -14,28 +14,6 @@ body {
   line-height: 1.6;
 }
 
-/* Code background effect */
-.code-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(0, 0, 0, 0.05);
-  font-family: monospace;
-  font-size: 14px;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  white-space: pre-wrap;
-  padding: 2rem;
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* Header */
 header {
   background: #0d6efd;
@@ -91,14 +69,9 @@ nav a:hover { opacity: 0.8; }
   background: #f0f0f0;
 }
 
-/* Arrow rotation */
-.toggle-dropdown::after {
-  content: " ▼";
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-li.active > .toggle-dropdown::after {
-  transform: rotate(180deg);
+/* Show dropdown on hover for desktop */
+nav li:hover .dropdown {
+  display: block;
 }
 
 /* Hero Section */
@@ -175,35 +148,47 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  nav ul { flex-direction: column; background: #0d6efd; width: 100%; position: absolute; top: 60px; left: -100%; transition: left 0.3s; }
-  nav ul.show { left: 0; }
-  nav li { width: 100%; }
-  nav a { padding: 1rem; }
-  .dropdown { position: static; }
+  nav ul {
+    flex-direction: column;
+    background: #0d6efd;
+    width: 100%;
+    display: none;
+  }
+  nav ul.show {
+    display: block;
+  }
+  nav li {
+    width: 100%;
+  }
+  nav a {
+    padding: 1rem;
+  }
+  .dropdown {
+    position: static;
+    display: none;
+  }
+  nav li.active .dropdown {
+    display: block;
+  }
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+}
+.menu-toggle {
+  display: none;
 }
 </style>
 </head>
 <body>
-
-<!-- CODE BACKGROUND -->
-<div class="code-bg">
-<pre>
-function helloWorld() {
-  console.log("Hello, BRAND INTEGER!");
-}
-helloWorld();
-
-let brand = "BRAND INTEGER";
-let mission = "Innovate and Simplify";
-console.log(`${brand} - ${mission}`);
-</pre>
-</div>
 
 <header>
   <div style="display:flex;align-items:center;">
     <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
+  <span class="menu-toggle">&#9776;</span>
   <nav>
     <ul>
       <li>
@@ -254,7 +239,7 @@ console.log(`${brand} - ${mission}`);
     <div class="service-card">
       <h4>Live Slots</h4>
     </div>
-	<div class="service-card">
+    <div class="service-card">
       <h4>Issues Regarding Refund</h4>
     </div>
   </div>
@@ -276,13 +261,11 @@ document.querySelectorAll('.toggle-dropdown').forEach(button => {
     e.preventDefault();
     const parent = button.parentElement;
     parent.classList.toggle('active');
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dd => {
-      if(dd !== parent.querySelector('.dropdown')){
-        dd.parentElement.classList.remove('active');
-      }
-    });
   });
+});
+
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+  document.querySelector('nav ul').classList.toggle('show');
 });
 </script>
 </body>
