@@ -15,28 +15,6 @@ body {
   position: relative;
 }
 
-/* Code background effect */
-.code-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(0, 0, 0, 0.05);
-  font-family: monospace;
-  font-size: 14px;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  white-space: pre-wrap;
-  padding: 2rem;
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* Header */
 header {
   background: #0d6efd;
@@ -53,6 +31,7 @@ header {
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
+/* Nav */
 nav {
   position: relative;
 }
@@ -65,12 +44,10 @@ nav li {
 }
 nav a {
   color: white;
-  margin-left: 20px;
   text-decoration: none;
   font-weight: 500;
-  transition: opacity 0.3s;
   display: block;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
 }
 nav a:hover { opacity: 0.8; }
 
@@ -82,7 +59,7 @@ nav a:hover { opacity: 0.8; }
   background: #0d6efd;
   display: none;
   flex-direction: column;
-  min-width: 180px;
+  min-width: 200px;
 }
 nav li:hover > .dropdown {
   display: flex;
@@ -101,25 +78,6 @@ nav li:hover > .dropdown {
     linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7));
   background-size: contain;
   color: white;
-  position: relative;
-}
-
-.hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
-.hero button {
-  padding: 1rem 2.2rem;
-  border: none;
-  background: white;
-  color: #0d6efd;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 50px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s, background 0.3s;
-}
-.hero button:hover {
-  transform: scale(1.05);
-  background: #f0f0f0;
 }
 
 /* Sections */
@@ -130,7 +88,6 @@ nav li:hover > .dropdown {
   margin: auto;
 }
 .section h3 { margin-bottom: 1.5rem; color: #0d6efd; font-size: 2.2rem; }
-.section p { color: #555; font-size: 1.05rem; }
 
 /* Services */
 .services {
@@ -144,16 +101,8 @@ nav li:hover > .dropdown {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-.service-card h4 { margin-bottom: 1rem; color: #0d6efd; font-size: 1.3rem; }
-
-/* Contact Section */
-.contact p { margin: 0.5rem 0; color: #555; }
+.service-card h4 { color: #0d6efd; font-size: 1.3rem; }
 
 /* Footer */
 footer {
@@ -163,32 +112,45 @@ footer {
   padding: 1rem;
 }
 
+/* Mobile Menu Button */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin-bottom: 4px;
+  border-radius: 3px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
   nav ul {
     flex-direction: column;
-    width: 100%;
     display: none;
+    width: 100%;
+    background: #0d6efd;
   }
   nav ul.show {
     display: flex;
   }
-  nav a {
-    margin-left: 0;
-    padding: 0.8rem 0;
-    width: 100%;
-  }
   nav li {
     width: 100%;
   }
-  .dropdown {
-    position: relative;
+  nav li:hover > .dropdown {
+    display: none;
   }
   nav li.active > .dropdown {
+    display: flex;
+  }
+  .dropdown {
+    position: relative;
+    top: 0;
+  }
+  .menu-toggle {
     display: flex;
   }
 }
@@ -196,27 +158,18 @@ footer {
 </head>
 <body>
 
-<!-- CODE BACKGROUND -->
-<div class="code-bg">
-<pre>
-function helloWorld() {
-  console.log("Hello, BRAND INTEGER!");
-}
-helloWorld();
-
-let brand = "BRAND INTEGER";
-let mission = "Innovate and Simplify";
-console.log(`${brand} - ${mission}`);
-</pre>
-</div>
-
 <header>
   <div style="display:flex;align-items:center;">
     <img src="assets/bg.png" alt="Logo">
     <h1>BRAND INTEGER</h1>
   </div>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
   <nav>
-    <ul>
+    <ul id="nav-list">
       <li>
         <a href="#">Menu</a>
         <div class="dropdown">
@@ -264,13 +217,16 @@ console.log(`${brand} - ${mission}`);
 </footer>
 
 <script>
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.getElementById('nav-list').classList.toggle('show');
+});
+
 document.querySelectorAll('nav li > a').forEach(link => {
   link.addEventListener('click', e => {
     const parent = link.parentElement;
     if (parent.querySelector('.dropdown')) {
       e.preventDefault();
       parent.classList.toggle('active');
-      // Close other dropdowns
       document.querySelectorAll('nav li').forEach(li => {
         if (li !== parent) li.classList.remove('active');
       });
