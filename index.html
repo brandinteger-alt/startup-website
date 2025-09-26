@@ -31,11 +31,7 @@ body {
   white-space: pre-wrap;
   padding: 2rem;
 }
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
+body > * { position: relative; z-index: 1; }
 
 /* Header */
 header {
@@ -56,7 +52,7 @@ header img { height: 40px; margin-right: 10px; }
 nav ul {
   list-style: none;
   display: flex;
-  align-items: center;
+  gap: 20px;
 }
 nav ul li {
   position: relative;
@@ -65,43 +61,32 @@ nav a {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  padding: 0.8rem 1rem;
-  display: block;
   transition: opacity 0.3s;
 }
 nav a:hover { opacity: 0.8; }
 
 /* Dropdown styles */
 nav ul li ul {
-  display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background: #0d6efd;
-  min-width: 180px;
-  border-radius: 4px;
-  overflow: hidden;
-  z-index: 100;
-}
-nav ul li:hover ul {
-  display: block;
-}
-nav ul li ul li a {
-  padding: 0.8rem 1rem;
-}
-
-/* Hamburger menu toggle */
-.menu-toggle {
+  background: #0b54d1;
   display: none;
   flex-direction: column;
-  cursor: pointer;
+  min-width: 150px;
+  border-radius: 5px;
+  overflow: hidden;
 }
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background: white;
-  margin: 4px 0;
-  border-radius: 2px;
+nav ul li:hover ul {
+  display: flex;
+}
+nav ul li ul li a {
+  padding: 10px;
+  display: block;
+  white-space: nowrap;
+}
+nav ul li ul li a:hover {
+  background: #0943a3;
 }
 
 /* Hero Section */
@@ -115,9 +100,7 @@ nav ul li ul li a {
   color: white;
   position: relative;
 }
-
 .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
-.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
   padding: 1rem 2.2rem;
   border: none;
@@ -179,21 +162,23 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  header {
-    flex-wrap: wrap;
-  }
-  .menu-toggle { display: flex; }
   nav ul {
     flex-direction: column;
     display: none;
-    width: 100%;
-    background: #0d6efd;
   }
-  nav ul.active { display: flex; }
+  nav ul.active {
+    display: flex;
+  }
   nav ul li ul {
     position: static;
   }
-  nav ul li:hover ul { display: none; }
+  nav ul li a.toggle-dropdown::after {
+    content: "▼";
+    margin-left: 5px;
+  }
+  nav ul li.active ul {
+    display: flex;
+  }
 }
 </style>
 </head>
@@ -206,7 +191,6 @@ function helloWorld() {
   console.log("Hello, BRAND INTEGER!");
 }
 helloWorld();
-
 let brand = "BRAND INTEGER";
 let mission = "Innovate and Simplify";
 console.log(`${brand} - ${mission}`);
@@ -218,42 +202,22 @@ console.log(`${brand} - ${mission}`);
     <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
-
-  <!-- Hamburger menu -->
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
   <nav>
     <ul id="nav-menu">
       <li><a href="#">Process</a>
         <ul>
           <li><a href="#">Step 1</a></li>
           <li><a href="#">Step 2</a></li>
-          <li><a href="#">Step 3</a></li>
         </ul>
       </li>
       <li><a href="#">Refund Portal</a>
         <ul>
-          <li><a href="#">Request Refund</a></li>
-          <li><a href="#">Check Status</a></li>
+          <li><a href="#">Apply</a></li>
+          <li><a href="#">Status</a></li>
         </ul>
       </li>
-      <li><a href="#">Hall of Fame</a>
-        <ul>
-          <li><a href="#">Winners</a></li>
-          <li><a href="#">Hall of Fame Wall</a></li>
-        </ul>
-      </li>
-      <li><a href="#">Live Slots</a>
-        <ul>
-          <li><a href="#">Slot 1</a></li>
-          <li><a href="#">Slot 2</a></li>
-        </ul>
-      </li>
-      <li><a href="#contact">Contact Us</a></li>
+      <li><a href="#">Hall of Fame</a></li>
+      <li><a href="#">Live Slots</a></li>
     </ul>
   </nav>
 </header>
@@ -291,9 +255,14 @@ console.log(`${brand} - ${mission}`);
 </footer>
 
 <script>
-function toggleMenu() {
-  document.getElementById("nav-menu").classList.toggle("active");
-}
+document.querySelectorAll("nav ul li > a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    if (window.innerWidth <= 768 && this.nextElementSibling) {
+      e.preventDefault();
+      this.parentElement.classList.toggle("active");
+    }
+  });
+});
 </script>
 
 </body>
