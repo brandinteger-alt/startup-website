@@ -49,6 +49,7 @@ header {
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
+/* Navigation */
 nav ul {
   list-style: none;
   display: flex;
@@ -87,6 +88,20 @@ nav ul li ul li a {
 }
 nav ul li ul li a:hover {
   background: #0943a3;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+  transition: 0.4s;
 }
 
 /* Hero Section */
@@ -162,22 +177,28 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .hamburger { display: flex; }
   nav ul {
     flex-direction: column;
     display: none;
+    background: #0d6efd;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
   }
-  nav ul.active {
-    display: flex;
-  }
+  nav ul.active { display: flex; }
+  nav ul li { width: 100%; }
   nav ul li ul {
     position: static;
-  }
-  nav ul li a.toggle-dropdown::after {
-    content: "▼";
-    margin-left: 5px;
+    display: none;
   }
   nav ul li.active ul {
     display: flex;
+    flex-direction: column;
+  }
+  nav ul li a.toggle-dropdown::after {
+    content: " ▼";
   }
 }
 </style>
@@ -202,15 +223,20 @@ console.log(`${brand} - ${mission}`);
     <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
   <nav>
     <ul id="nav-menu">
-      <li><a href="#">Process</a>
+      <li><a href="#" class="toggle-dropdown">Process</a>
         <ul>
           <li><a href="#">Step 1</a></li>
           <li><a href="#">Step 2</a></li>
         </ul>
       </li>
-      <li><a href="#">Refund Portal</a>
+      <li><a href="#" class="toggle-dropdown">Refund Portal</a>
         <ul>
           <li><a href="#">Apply</a></li>
           <li><a href="#">Status</a></li>
@@ -255,9 +281,16 @@ console.log(`${brand} - ${mission}`);
 </footer>
 
 <script>
-document.querySelectorAll("nav ul li > a").forEach(link => {
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-menu");
+
+hamburger.addEventListener("click", () => {
+  navMenu.classList.toggle("active");
+});
+
+document.querySelectorAll(".toggle-dropdown").forEach(link => {
   link.addEventListener("click", function(e) {
-    if (window.innerWidth <= 768 && this.nextElementSibling) {
+    if (window.innerWidth <= 768) {
       e.preventDefault();
       this.parentElement.classList.toggle("active");
     }
