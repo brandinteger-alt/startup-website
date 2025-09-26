@@ -3,27 +3,38 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="BRAND INTEGER — creative software, design, and business solutions">
-<meta name="keywords" content="software, design, branding, business consulting">
 <title>BRAND INTEGER</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
-html {
-  scroll-behavior: smooth;
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
   font-family: 'Poppins', sans-serif;
   color: #333;
   background-color: #f5f6fa;
   line-height: 1.6;
+  position: relative;
 }
 
-a:focus, button:focus {
-  outline: 2px dashed #fff;
-  outline-offset: 4px;
+/* Code background effect */
+.code-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.05);
+  font-family: monospace;
+  font-size: 14px;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: pre-wrap;
+  padding: 2rem;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
@@ -39,40 +50,20 @@ header {
   align-items: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-header h1 {
-  font-size: 1.7rem;
-  font-weight: 600;
-}
-header img {
-  height: 40px;
-  margin-right: 10px;
-}
-nav a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.3s;
-}
+header h1 { font-size: 1.7rem; font-weight: 600; }
+header img { height: 40px; margin-right: 10px; }
+nav a { color: white; margin-left: 20px; text-decoration: none; font-weight: 500; transition: opacity 0.3s; }
 nav a:hover { opacity: 0.8; }
 
 /* Hero Section */
 .hero {
-  position: relative;
   padding: 6rem 2rem;
   text-align: center;
   background: linear-gradient(135deg, #0d6efd, #6c63ff);
   color: white;
-  overflow: hidden;
 }
-.hero h2 {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-}
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
+.hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
   padding: 1rem 2.2rem;
   border: none;
@@ -90,23 +81,6 @@ nav a:hover { opacity: 0.8; }
   background: #f0f0f0;
 }
 
-/* Floating animation */
-.hero-bg {
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent);
-  border-radius: 50%;
-  animation: float 8s ease-in-out infinite;
-  z-index: 0;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(20px) translateX(20px); }
-}
-
 /* Sections */
 .section {
   padding: 4rem 2rem;
@@ -114,15 +88,8 @@ nav a:hover { opacity: 0.8; }
   max-width: 1100px;
   margin: auto;
 }
-.section h3 {
-  margin-bottom: 1.5rem;
-  color: #0d6efd;
-  font-size: 2.2rem;
-}
-.section p {
-  color: #555;
-  font-size: 1.05rem;
-}
+.section h3 { margin-bottom: 1.5rem; color: #0d6efd; font-size: 2.2rem; }
+.section p { color: #555; font-size: 1.05rem; }
 
 /* Services */
 .services {
@@ -142,20 +109,11 @@ nav a:hover { opacity: 0.8; }
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
-.service-card h4 {
-  margin-bottom: 1rem;
-  color: #0d6efd;
-  font-size: 1.3rem;
-}
-.service-card p {
-  color: #666;
-}
+.service-card h4 { margin-bottom: 1rem; color: #0d6efd; font-size: 1.3rem; }
+.service-card p { color: #666; }
 
 /* Contact Section */
-.contact p {
-  margin: 0.5rem 0;
-  color: #555;
-}
+.contact p { margin: 0.5rem 0; color: #555; }
 
 /* Footer */
 footer {
@@ -169,18 +127,28 @@ footer {
 @media (max-width: 768px) {
   .hero h2 { font-size: 2rem; }
   header h1 { font-size: 1.4rem; }
-  .services {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
 }
 </style>
 </head>
 <body>
 
+<!-- CODE BACKGROUND -->
+<div class="code-bg">
+<pre>
+function helloWorld() {
+  console.log("Hello, BRAND INTEGER!");
+}
+helloWorld();
+
+let brand = "BRAND INTEGER";
+let mission = "Innovate and Simplify";
+console.log(`${brand} - ${mission}`);
+</pre>
+</div>
+
 <header>
   <div style="display:flex;align-items:center;">
-    <img src="bg.png" alt="Brand Integer Logo">
+    <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
   <nav>
@@ -192,7 +160,7 @@ footer {
 
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
-  <button aria-label="Get Started with BRAND INTEGER">Get Started</button>
+  <button>Get Started</button>
 </section>
 
 <section id="about" class="section">
