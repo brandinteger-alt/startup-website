@@ -12,6 +12,29 @@ body {
   color: #333;
   background-color: #f5f6fa;
   line-height: 1.6;
+  position: relative;
+}
+
+/* Code background effect */
+.code-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.05);
+  font-family: monospace;
+  font-size: 14px;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: pre-wrap;
+  padding: 2rem;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
@@ -30,48 +53,43 @@ header {
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
+nav {
+  position: relative;
+}
 nav ul {
-  list-style: none;
   display: flex;
-  gap: 1rem;
+  list-style: none;
 }
 nav li {
   position: relative;
 }
 nav a {
   color: white;
+  margin-left: 20px;
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem;
+  transition: opacity 0.3s;
   display: block;
+  padding: 0.5rem 0;
 }
 nav a:hover { opacity: 0.8; }
 
-/* Dropdown styling */
+/* Dropdown */
 .dropdown {
-  display: none;
   position: absolute;
-  background: white;
-  color: #333;
   top: 100%;
   left: 0;
-  min-width: 150px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 6px;
-  overflow: hidden;
-  z-index: 999;
+  background: #0d6efd;
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+}
+nav li:hover > .dropdown {
+  display: flex;
 }
 .dropdown a {
-  color: #333;
+  margin: 0;
   padding: 0.5rem 1rem;
-}
-.dropdown a:hover {
-  background: #f0f0f0;
-}
-
-/* Show dropdown on hover for desktop */
-nav li:hover .dropdown {
-  display: block;
 }
 
 /* Hero Section */
@@ -133,7 +151,6 @@ nav li:hover .dropdown {
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 .service-card h4 { margin-bottom: 1rem; color: #0d6efd; font-size: 1.3rem; }
-.service-card p { color: #666; }
 
 /* Contact Section */
 .contact p { margin: 0.5rem 0; color: #555; }
@@ -148,77 +165,68 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   nav ul {
     flex-direction: column;
-    background: #0d6efd;
     width: 100%;
     display: none;
   }
   nav ul.show {
-    display: block;
+    display: flex;
+  }
+  nav a {
+    margin-left: 0;
+    padding: 0.8rem 0;
+    width: 100%;
   }
   nav li {
     width: 100%;
   }
-  nav a {
-    padding: 1rem;
-  }
   .dropdown {
-    position: static;
-    display: none;
+    position: relative;
   }
-  nav li.active .dropdown {
-    display: block;
+  nav li.active > .dropdown {
+    display: flex;
   }
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    font-size: 1.5rem;
-  }
-}
-.menu-toggle {
-  display: none;
 }
 </style>
 </head>
 <body>
 
+<!-- CODE BACKGROUND -->
+<div class="code-bg">
+<pre>
+function helloWorld() {
+  console.log("Hello, BRAND INTEGER!");
+}
+helloWorld();
+
+let brand = "BRAND INTEGER";
+let mission = "Innovate and Simplify";
+console.log(`${brand} - ${mission}`);
+</pre>
+</div>
+
 <header>
   <div style="display:flex;align-items:center;">
-    <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
+    <img src="assets/bg.png" alt="Logo">
     <h1>BRAND INTEGER</h1>
   </div>
-  <span class="menu-toggle">&#9776;</span>
   <nav>
     <ul>
       <li>
-        <a href="#" class="toggle-dropdown">Process</a>
+        <a href="#">Menu</a>
         <div class="dropdown">
-          <a href="#">Step 1</a>
-          <a href="#">Step 2</a>
+          <a href="#hall">Hall of Fame</a>
+          <a href="#refund">Refund Tracking Portal</a>
+          <a href="#slots">Live Slots</a>
+          <a href="#issues">Issues Regarding Refund</a>
         </div>
       </li>
-      <li>
-        <a href="#" class="toggle-dropdown">Refund Portal</a>
-        <div class="dropdown">
-          <a href="#">Request Refund</a>
-          <a href="#">Track Status</a>
-        </div>
-      </li>
-      <li>
-        <a href="#" class="toggle-dropdown">Hall of Fame</a>
-        <div class="dropdown">
-          <a href="#">Achievements</a>
-          <a href="#">Testimonials</a>
-        </div>
-      </li>
-      <li>
-        <a href="#" class="toggle-dropdown">Live Slots</a>
-        <div class="dropdown">
-          <a href="#">Today’s Slots</a>
-          <a href="#">Upcoming</a>
-        </div>
-      </li>
+      <li><a href="#contact">Contact Us</a></li>
     </ul>
   </nav>
 </header>
@@ -230,16 +238,16 @@ footer {
 
 <section id="services" class="section">
   <div class="services">
-    <div class="service-card">
+    <div class="service-card" id="hall">
       <h4>Hall of Fame</h4>
     </div>
-    <div class="service-card">
+    <div class="service-card" id="refund">
       <h4>Refund Tracking Portal</h4>
     </div>
-    <div class="service-card">
+    <div class="service-card" id="slots">
       <h4>Live Slots</h4>
     </div>
-    <div class="service-card">
+    <div class="service-card" id="issues">
       <h4>Issues Regarding Refund</h4>
     </div>
   </div>
@@ -256,17 +264,20 @@ footer {
 </footer>
 
 <script>
-document.querySelectorAll('.toggle-dropdown').forEach(button => {
-  button.addEventListener('click', e => {
-    e.preventDefault();
-    const parent = button.parentElement;
-    parent.classList.toggle('active');
+document.querySelectorAll('nav li > a').forEach(link => {
+  link.addEventListener('click', e => {
+    const parent = link.parentElement;
+    if (parent.querySelector('.dropdown')) {
+      e.preventDefault();
+      parent.classList.toggle('active');
+      // Close other dropdowns
+      document.querySelectorAll('nav li').forEach(li => {
+        if (li !== parent) li.classList.remove('active');
+      });
+    }
   });
 });
-
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-  document.querySelector('nav ul').classList.toggle('show');
-});
 </script>
+
 </body>
 </html>
