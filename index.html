@@ -31,7 +31,11 @@ body {
   white-space: pre-wrap;
   padding: 2rem;
 }
-body > * { position: relative; z-index: 1; }
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
 
 /* Header */
 header {
@@ -49,59 +53,80 @@ header {
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
-/* Navigation */
+/* Dropdown Menu Styling */
 nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 1rem;
 }
+
 nav ul li {
   position: relative;
 }
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.3s;
-}
-nav a:hover { opacity: 0.8; }
 
-/* Dropdown styles */
-nav ul li ul {
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem;
+  display: block;
+}
+
+nav ul li .dropdown-menu {
+  display: none;
   position: absolute;
+  background: white;
+  color: #0d6efd;
   top: 100%;
   left: 0;
-  background: #0b54d1;
-  display: none;
-  flex-direction: column;
   min-width: 150px;
-  border-radius: 5px;
-  overflow: hidden;
-}
-nav ul li:hover ul {
-  display: flex;
-}
-nav ul li ul li a {
-  padding: 10px;
-  display: block;
-  white-space: nowrap;
-}
-nav ul li ul li a:hover {
-  background: #0943a3;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Hamburger Menu */
-.hamburger {
+nav ul li.active .dropdown-menu {
+  display: block;
+}
+
+nav ul li .dropdown-menu a {
+  padding: 0.75rem 1rem;
+  display: block;
+  color: #0d6efd;
+}
+
+nav ul li .dropdown-menu a:hover {
+  background: #f0f0f0;
+}
+
+/* Hamburger menu for mobile */
+#hamburger {
   display: none;
   flex-direction: column;
   cursor: pointer;
 }
-.hamburger div {
+
+#hamburger div {
   width: 25px;
   height: 3px;
-  background-color: white;
+  background: white;
   margin: 4px 0;
-  transition: 0.4s;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    display: none;
+    background: #0d6efd;
+    width: 100%;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  #hamburger {
+    display: flex;
+  }
 }
 
 /* Hero Section */
@@ -115,7 +140,9 @@ nav ul li ul li a:hover {
   color: white;
   position: relative;
 }
+
 .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
   padding: 1rem 2.2rem;
   border: none;
@@ -177,29 +204,8 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hamburger { display: flex; }
-  nav ul {
-    flex-direction: column;
-    display: none;
-    background: #0d6efd;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 100%;
-  }
-  nav ul.active { display: flex; }
-  nav ul li { width: 100%; }
-  nav ul li ul {
-    position: static;
-    display: none;
-  }
-  nav ul li.active ul {
-    display: flex;
-    flex-direction: column;
-  }
-  nav ul li a.toggle-dropdown::after {
-    content: " ▼";
-  }
+  .hero h2 { font-size: 2rem; }
+  header h1 { font-size: 1.4rem; }
 }
 </style>
 </head>
@@ -212,6 +218,7 @@ function helloWorld() {
   console.log("Hello, BRAND INTEGER!");
 }
 helloWorld();
+
 let brand = "BRAND INTEGER";
 let mission = "Innovate and Simplify";
 console.log(`${brand} - ${mission}`);
@@ -223,27 +230,42 @@ console.log(`${brand} - ${mission}`);
     <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
     <h1>BRAND INTEGER</h1>
   </div>
-  <div class="hamburger" id="hamburger">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
   <nav>
+    <div id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <ul id="nav-menu">
-      <li><a href="#" class="toggle-dropdown">Process</a>
-        <ul>
-          <li><a href="#">Step 1</a></li>
-          <li><a href="#">Step 2</a></li>
-        </ul>
+      <li>
+        <a href="#" class="toggle-dropdown">Process</a>
+        <div class="dropdown-menu">
+          <a href="#">Step 1</a>
+          <a href="#">Step 2</a>
+        </div>
       </li>
-      <li><a href="#" class="toggle-dropdown">Refund Portal</a>
-        <ul>
-          <li><a href="#">Apply</a></li>
-          <li><a href="#">Status</a></li>
-        </ul>
+      <li>
+        <a href="#" class="toggle-dropdown">Refund Portal</a>
+        <div class="dropdown-menu">
+          <a href="#">Request Refund</a>
+          <a href="#">Refund Status</a>
+        </div>
       </li>
-      <li><a href="#">Hall of Fame</a></li>
-      <li><a href="#">Live Slots</a></li>
+      <li>
+        <a href="#" class="toggle-dropdown">Hall of Fame</a>
+        <div class="dropdown-menu">
+          <a href="#">Winners</a>
+          <a href="#">Leaderboard</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="toggle-dropdown">Live Slots</a>
+        <div class="dropdown-menu">
+          <a href="#">Slot 1</a>
+          <a href="#">Slot 2</a>
+        </div>
+      </li>
+      <li><a href="#contact">Contact Us</a></li>
     </ul>
   </nav>
 </header>
@@ -292,9 +314,24 @@ document.querySelectorAll(".toggle-dropdown").forEach(link => {
   link.addEventListener("click", function(e) {
     if (window.innerWidth <= 768) {
       e.preventDefault();
+
+      document.querySelectorAll(".toggle-dropdown").forEach(otherLink => {
+        if (otherLink !== this) {
+          otherLink.parentElement.classList.remove("active");
+        }
+      });
+
       this.parentElement.classList.toggle("active");
     }
   });
+});
+
+document.addEventListener("click", function(e) {
+  const isClickInsideMenu = navMenu.contains(e.target) || hamburger.contains(e.target);
+  if (!isClickInsideMenu && window.innerWidth <= 768) {
+    document.querySelectorAll("li").forEach(li => li.classList.remove("active"));
+    navMenu.classList.remove("active");
+  }
 });
 </script>
 
