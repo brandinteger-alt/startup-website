@@ -31,11 +31,7 @@ body {
   white-space: pre-wrap;
   padding: 2rem;
 }
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
+body > * { position: relative; z-index: 1; }
 
 /* Header */
 header {
@@ -52,8 +48,46 @@ header {
 }
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
-nav a { color: white; margin-left: 20px; text-decoration: none; font-weight: 500; transition: opacity 0.3s; }
+
+/* Navigation Menu */
+nav {
+  display: flex;
+  align-items: center;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+}
+nav ul li {
+  position: relative;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  display: block;
+  transition: opacity 0.3s;
+}
 nav a:hover { opacity: 0.8; }
+
+/* Dropdown Styles */
+nav ul li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #0d6efd;
+  min-width: 180px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+nav ul li:hover ul {
+  display: block;
+}
+nav ul li ul li a {
+  padding: 0.8rem 1rem;
+}
 
 /* Hero Section */
 .hero {
@@ -66,7 +100,6 @@ nav a:hover { opacity: 0.8; }
   color: white;
   position: relative;
 }
-
 .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
 .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
@@ -132,6 +165,12 @@ footer {
 @media (max-width: 768px) {
   .hero h2 { font-size: 2rem; }
   header h1 { font-size: 1.4rem; }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li ul {
+    position: static;
+  }
 }
 </style>
 </head>
@@ -157,8 +196,34 @@ console.log(`${brand} - ${mission}`);
     <h1>BRAND INTEGER</h1>
   </div>
   <nav>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
+    <ul>
+      <li><a href="#">Process</a>
+        <ul>
+          <li><a href="#">Step 1</a></li>
+          <li><a href="#">Step 2</a></li>
+          <li><a href="#">Step 3</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Refund Portal</a>
+        <ul>
+          <li><a href="#">Request Refund</a></li>
+          <li><a href="#">Check Status</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Hall of Fame</a>
+        <ul>
+          <li><a href="#">Winners</a></li>
+          <li><a href="#">Hall of Fame Wall</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Live Slots</a>
+        <ul>
+          <li><a href="#">Slot 1</a></li>
+          <li><a href="#">Slot 2</a></li>
+        </ul>
+      </li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
   </nav>
 </header>
 
@@ -168,7 +233,6 @@ console.log(`${brand} - ${mission}`);
 </section>
 
 <section id="services" class="section">
-  <h3>Our Services</h3>
   <div class="services">
     <div class="service-card">
       <h4>Custom Software</h4>
