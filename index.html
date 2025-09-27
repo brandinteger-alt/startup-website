@@ -52,36 +52,6 @@ nav a {
   padding: 8px;
 }
 
-.dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-  min-width: 150px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-
-.dropdown a {
-  display: block;
-  padding: 10px;
-  color: white;
-}
-
-.dropdown a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.dropdown-parent:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
 /* Hero Section */
 .hero {
   padding: 4rem 2rem;
@@ -105,9 +75,7 @@ nav a {
 }
 
 .hero-btn {
-  flex: 1;
-  min-width: 120px;
-  padding: 0.8rem;
+  padding: 0.6rem 1rem; /* Reduced size */
   border: none;
   background: white;
   color: #0d6efd;
@@ -145,6 +113,11 @@ nav a {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
   position: relative;
+  transition: transform 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
 }
 
 /* Dropdown inside service card */
@@ -153,12 +126,13 @@ nav a {
   top: 100%;
   left: 0;
   width: 100%;
-  background: rgba(13, 110, 253, 0.8);
+  background: linear-gradient(135deg, rgba(13,110,253,0.9), rgba(108,99,255,0.9));
   border-radius: 0 0 10px 10px;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  z-index: 10;
 }
 
 .service-dropdown.open {
@@ -172,6 +146,7 @@ nav a {
   color: white;
   text-decoration: none;
   border-bottom: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.3s;
 }
 
 .service-dropdown a:hover {
@@ -215,19 +190,6 @@ footer {
 
   .menu-toggle {
     display: block;
-    color: white;
-  }
-
-  .dropdown {
-    position: relative;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    padding-left: 10px;
-  }
-
-  .dropdown a {
     color: white;
   }
 }
