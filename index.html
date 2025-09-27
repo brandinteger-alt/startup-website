@@ -172,6 +172,14 @@ footer {
     display: block;
     color: white;
   }
+
+  /* Mobile-specific opacity reduction */
+  .service-card {
+    opacity: 1;
+  }
+  .service-card.dimmed {
+    opacity: 0.5;
+  }
 }
 </style>
 </head>
@@ -252,14 +260,21 @@ function toggleMenu() {
 
 function toggleDropdown(card) {
   let allCards = document.querySelectorAll(".service-card");
+  let isMobile = window.innerWidth <= 768;
+
   allCards.forEach(c => {
     let dropdown = c.querySelector(".service-dropdown");
     if (c === card) {
       let isOpen = dropdown.classList.contains("open");
       dropdown.classList.toggle("open", !isOpen);
-      c.style.opacity = "1";
+
+      if (isMobile) {
+        c.classList.remove("dimmed");
+      }
     } else {
-      c.style.opacity = "0";
+      if (isMobile) {
+        c.classList.add("dimmed");
+      }
       c.querySelector(".service-dropdown").classList.remove("open");
     }
   });
