@@ -51,7 +51,10 @@ nav a {
   padding: 8px;
 }
 
-/* Desktop dropdowns */
+.dropdown-parent {
+  position: relative;
+}
+
 .dropdown {
   position: absolute;
   top: 100%;
@@ -76,7 +79,7 @@ nav a {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Hover for desktop dropdown */
+/* Desktop dropdown hover */
 @media (min-width: 769px) {
   .dropdown-parent:hover .dropdown {
     opacity: 1;
@@ -108,7 +111,7 @@ nav a {
 }
 
 .hero-btn {
-  width: 140px;
+  width: 130px; /* equal length for both */
   padding: 0.8rem;
   border: none;
   background: white;
@@ -147,7 +150,6 @@ nav a {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
   position: relative;
-  transition: opacity 0.3s ease;
 }
 
 .service-dropdown {
@@ -190,19 +192,15 @@ footer {
     flex-direction: column;
     background: rgba(13, 110, 253, 0.95);
     position: fixed;
-    right: -250px;
+    right: 0;
     top: 60px;
     width: 200px;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: calc(100% - 60px);
-    transition: right 0.3s ease;
+    display: none;
   }
 
   nav ul.active {
-    right: 0;
+    display: flex;
   }
 
   nav li {
@@ -232,7 +230,7 @@ footer {
 <body>
 
 <header>
-  <div style="display:flex;align-items:center;gap:10px;">
+  <div style="display:flex;align-items:center;">
     <img src="assets/bg.png" alt="Logo" style="height:40px;">
     <h1>BRAND INTEGER</h1>
   </div>
