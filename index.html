@@ -52,9 +52,39 @@ nav a {
   padding: 8px;
 }
 
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  min-width: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px;
+  color: white;
+}
+
+.dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-parent:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* Hero Section */
 .hero {
-  padding: 5rem 2rem;
+  padding: 4rem 2rem;
   text-align: center;
   color: white;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
@@ -64,20 +94,20 @@ nav a {
 
 .hero h2 {
   font-size: 2rem;
-  margin-bottom: 20px;
 }
 
 .hero .buttons {
   display: flex;
   gap: 20px;
   justify-content: center;
+  margin-top: 1.5rem;
   flex-wrap: wrap;
 }
 
 .hero-btn {
   flex: 1;
   min-width: 120px;
-  padding: 1rem 1.2rem;
+  padding: 0.8rem;
   border: none;
   background: white;
   color: #0d6efd;
@@ -87,6 +117,11 @@ nav a {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: background 0.3s, transform 0.2s;
+}
+
+.hero-btn:hover {
+  transform: scale(1.05);
+  background: #f0f0f0;
 }
 
 /* Services Section */
@@ -108,36 +143,39 @@ nav a {
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  position: relative;
   cursor: pointer;
-  overflow: hidden;
-}
-
-.service-card h4 {
-  text-align: center;
+  position: relative;
 }
 
 /* Dropdown inside service card */
 .service-dropdown {
   position: absolute;
-  top: 0;
+  top: 100%;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(13, 110, 253, 0.6), rgba(108, 99, 255, 0.6));
-  color: white;
-  padding: 1rem;
+  background: rgba(13, 110, 253, 0.8);
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+  max-height: 0;
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
 }
 
-.service-card:hover .service-dropdown {
+.service-dropdown.open {
+  max-height: 500px;
   opacity: 1;
-  visibility: visible;
+}
+
+.service-dropdown a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.service-dropdown a:hover {
+  background: rgba(255,255,255,0.1);
 }
 
 /* Footer */
@@ -179,6 +217,19 @@ footer {
     display: block;
     color: white;
   }
+
+  .dropdown {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    padding-left: 10px;
+  }
+
+  .dropdown a {
+    color: white;
+  }
 }
 </style>
 </head>
@@ -192,8 +243,20 @@ footer {
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <nav>
     <ul id="nav-list">
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#links">Useful Links</a></li>
+      <li class="dropdown-parent">
+        <a href="#">FAQ</a>
+        <div class="dropdown">
+          <a href="#faq1">FAQ 1</a>
+          <a href="#faq2">FAQ 2</a>
+        </div>
+      </li>
+      <li class="dropdown-parent">
+        <a href="#">Useful Links</a>
+        <div class="dropdown">
+          <a href="#link1">Link 1</a>
+          <a href="#link2">Link 2</a>
+        </div>
+      </li>
       <li><a href="#contact">Contact Us</a></li>
     </ul>
   </nav>
@@ -201,36 +264,44 @@ footer {
 
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
+  <div class="buttons">
+    <button class="hero-btn">Get Started</button>
+    <button class="hero-btn">Rules</button>
+  </div>
 </section>
 
 <section id="services" class="section">
   <div class="services">
-    <div class="service-card">
+    <div class="service-card" onclick="toggleDropdown(this)">
       <h4>Hall of Fame</h4>
       <div class="service-dropdown">
-        <p>Details about Hall of Fame go here...</p>
-        <a href="#hof" style="color:white;text-decoration:underline;">Read More</a>
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
       </div>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="toggleDropdown(this)">
       <h4>Refund Tracking Portal</h4>
       <div class="service-dropdown">
-        <p>Track refunds easily here...</p>
-        <a href="#refund" style="color:white;text-decoration:underline;">Read More</a>
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
       </div>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="toggleDropdown(this)">
       <h4>Live Slots</h4>
       <div class="service-dropdown">
-        <p>Play and check live slots.</p>
-        <a href="#slots" style="color:white;text-decoration:underline;">Read More</a>
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
       </div>
     </div>
-    <div class="service-card">
+    <div class="service-card" onclick="toggleDropdown(this)">
       <h4>Issues Regarding Refund</h4>
       <div class="service-dropdown">
-        <p>Resolve refund-related issues here.</p>
-        <a href="#issues" style="color:white;text-decoration:underline;">Read More</a>
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
       </div>
     </div>
   </div>
@@ -249,6 +320,16 @@ footer {
 <script>
 function toggleMenu() {
   document.getElementById('nav-list').classList.toggle('active');
+}
+
+function toggleDropdown(card) {
+  let dropdowns = document.querySelectorAll(".service-dropdown");
+  dropdowns.forEach(d => {
+    if (d !== card.querySelector(".service-dropdown")) {
+      d.classList.remove("open");
+    }
+  });
+  card.querySelector(".service-dropdown").classList.toggle("open");
 }
 </script>
 
