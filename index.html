@@ -84,7 +84,7 @@ nav a {
 
 /* Hero Section */
 .hero {
-  padding: 2rem;
+  padding: 5rem 2rem; /* Increased height */
   text-align: center;
   color: white;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
@@ -94,29 +94,30 @@ nav a {
 
 .hero h2 {
   font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .hero .buttons {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
-  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
 .hero-btn {
   flex: 1;
-  min-width: 100px;
-  padding: 0.6rem;
+  min-width: 120px;
+  padding: 1rem 1.2rem;
   border: none;
   background: white;
   color: #0d6efd;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: background 0.3s, transform 0.2s;
+  position: relative;
 }
 
 .hero-btn:hover {
@@ -124,59 +125,56 @@ nav a {
   background: #f0f0f0;
 }
 
+.dropdown-btn {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 5px;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.dropdown-btn a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-align: left;
+}
+
+.dropdown-btn a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hero-btn:hover .dropdown-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* Services Section */
 .section {
-  padding: 1rem;
-  max-width: 900px;
+  padding: 2rem;
+  max-width: 1000px;
   margin: auto;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
 }
 
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
 .service-card {
-  background: white;
+  background: rgba(255,255,255,0.9);
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-/* Section Dropdowns (Accordion) */
-.section-dropdown {
-  display: none;
-  padding: 0.8rem;
-  background: rgba(0,0,0,0.05);
-  border-radius: 5px;
-  margin-top: 0.5rem;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
-}
-
-.section-dropdown.show {
-  display: block;
-  max-height: 500px;
-}
-
-.section-dropdown-toggle {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background: #0d6efd;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.section-dropdown-toggle:hover {
-  background: #0841b0;
 }
 
 /* Footer */
@@ -266,42 +264,29 @@ footer {
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
   <div class="buttons">
-    <button class="hero-btn">Get Started</button>
-    <button class="hero-btn">Rules</button>
+    <div style="position:relative;">
+      <button class="hero-btn">Get Started</button>
+      <div class="dropdown-btn">
+        <a href="#start1">Step 1</a>
+        <a href="#start2">Step 2</a>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <button class="hero-btn">Rules</button>
+      <div class="dropdown-btn">
+        <a href="#rule1">Rule 1</a>
+        <a href="#rule2">Rule 2</a>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="services" class="section">
-  <h3>Services</h3>
   <div class="services">
-    <div class="service-card">
-      <h4>Hall of Fame</h4>
-      <button class="section-dropdown-toggle">Details ▼</button>
-      <div class="section-dropdown">
-        <p>This section contains detailed information about Hall of Fame.</p>
-      </div>
-    </div>
-    <div class="service-card">
-      <h4>Refund Tracking Portal</h4>
-      <button class="section-dropdown-toggle">Details ▼</button>
-      <div class="section-dropdown">
-        <p>This section contains details about the refund tracking process.</p>
-      </div>
-    </div>
-    <div class="service-card">
-      <h4>Live Slots</h4>
-      <button class="section-dropdown-toggle">Details ▼</button>
-      <div class="section-dropdown">
-        <p>Live slots details and updates.</p>
-      </div>
-    </div>
-    <div class="service-card">
-      <h4>Issues Regarding Refund</h4>
-      <button class="section-dropdown-toggle">Details ▼</button>
-      <div class="section-dropdown">
-        <p>Information on resolving refund issues.</p>
-      </div>
-    </div>
+    <div class="service-card"><h4>Hall of Fame</h4></div>
+    <div class="service-card"><h4>Refund Tracking Portal</h4></div>
+    <div class="service-card"><h4>Live Slots</h4></div>
+    <div class="service-card"><h4>Issues Regarding Refund</h4></div>
   </div>
 </section>
 
@@ -319,13 +304,6 @@ footer {
 function toggleMenu() {
   document.getElementById('nav-list').classList.toggle('active');
 }
-
-document.querySelectorAll('.section-dropdown-toggle').forEach(button => {
-  button.addEventListener('click', () => {
-    const dropdown = button.nextElementSibling;
-    dropdown.classList.toggle('show');
-  });
-});
 </script>
 
 </body>
