@@ -52,39 +52,9 @@ nav a {
   padding: 8px;
 }
 
-.dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-  min-width: 150px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-
-.dropdown a {
-  display: block;
-  padding: 10px;
-  color: white;
-}
-
-.dropdown a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.dropdown-parent:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
 /* Hero Section */
 .hero {
-  padding: 5rem 2rem; /* Increased height */
+  padding: 5rem 2rem;
   text-align: center;
   color: white;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
@@ -117,43 +87,6 @@ nav a {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: background 0.3s, transform 0.2s;
-  position: relative;
-}
-
-.hero-btn:hover {
-  transform: scale(1.05);
-  background: #f0f0f0;
-}
-
-.dropdown-btn {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background: rgba(0, 0, 0, 0.9);
-  border-radius: 5px;
-  min-width: 160px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 999;
-}
-
-.dropdown-btn a {
-  display: block;
-  padding: 10px;
-  color: white;
-  text-align: left;
-}
-
-.dropdown-btn a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.hero-btn:hover .dropdown-btn {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
 }
 
 /* Services Section */
@@ -175,6 +108,36 @@ nav a {
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.service-card h4 {
+  text-align: center;
+}
+
+/* Dropdown inside service card */
+.service-dropdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(13, 110, 253, 0.6), rgba(108, 99, 255, 0.6));
+  color: white;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.service-card:hover .service-dropdown {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Footer */
@@ -216,19 +179,6 @@ footer {
     display: block;
     color: white;
   }
-
-  .dropdown {
-    position: relative;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    padding-left: 10px;
-  }
-
-  .dropdown a {
-    color: white;
-  }
 }
 </style>
 </head>
@@ -242,20 +192,8 @@ footer {
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <nav>
     <ul id="nav-list">
-      <li class="dropdown-parent">
-        <a href="#">FAQ</a>
-        <div class="dropdown">
-          <a href="#faq1">FAQ 1</a>
-          <a href="#faq2">FAQ 2</a>
-        </div>
-      </li>
-      <li class="dropdown-parent">
-        <a href="#">Useful Links</a>
-        <div class="dropdown">
-          <a href="#link1">Link 1</a>
-          <a href="#link2">Link 2</a>
-        </div>
-      </li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#links">Useful Links</a></li>
       <li><a href="#contact">Contact Us</a></li>
     </ul>
   </nav>
@@ -263,30 +201,38 @@ footer {
 
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
-  <div class="buttons">
-    <div style="position:relative;">
-      <button class="hero-btn">Get Started</button>
-      <div class="dropdown-btn">
-        <a href="#start1">Step 1</a>
-        <a href="#start2">Step 2</a>
-      </div>
-    </div>
-    <div style="position:relative;">
-      <button class="hero-btn">Rules</button>
-      <div class="dropdown-btn">
-        <a href="#rule1">Rule 1</a>
-        <a href="#rule2">Rule 2</a>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section id="services" class="section">
   <div class="services">
-    <div class="service-card"><h4>Hall of Fame</h4></div>
-    <div class="service-card"><h4>Refund Tracking Portal</h4></div>
-    <div class="service-card"><h4>Live Slots</h4></div>
-    <div class="service-card"><h4>Issues Regarding Refund</h4></div>
+    <div class="service-card">
+      <h4>Hall of Fame</h4>
+      <div class="service-dropdown">
+        <p>Details about Hall of Fame go here...</p>
+        <a href="#hof" style="color:white;text-decoration:underline;">Read More</a>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Refund Tracking Portal</h4>
+      <div class="service-dropdown">
+        <p>Track refunds easily here...</p>
+        <a href="#refund" style="color:white;text-decoration:underline;">Read More</a>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Live Slots</h4>
+      <div class="service-dropdown">
+        <p>Play and check live slots.</p>
+        <a href="#slots" style="color:white;text-decoration:underline;">Read More</a>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Issues Regarding Refund</h4>
+      <div class="service-dropdown">
+        <p>Resolve refund-related issues here.</p>
+        <a href="#issues" style="color:white;text-decoration:underline;">Read More</a>
+      </div>
+    </div>
   </div>
 </section>
 
