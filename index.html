@@ -92,7 +92,7 @@ header h1 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
   position: relative;
-  transition: transform 0.2s ease, opacity 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .service-card:hover {
@@ -173,12 +173,18 @@ footer {
     color: white;
   }
 
-  /* Mobile-specific opacity reduction */
+  /* Opacity adjustments */
   .service-card {
     opacity: 1;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
   }
+
   .service-card.dimmed {
     opacity: 0.5;
+  }
+
+  .service-card.transparent {
+    opacity: 0;
   }
 }
 </style>
@@ -261,23 +267,32 @@ function toggleMenu() {
 function toggleDropdown(card) {
   let allCards = document.querySelectorAll(".service-card");
   let isMobile = window.innerWidth <= 768;
+  let clickedDropdown = card.querySelector(".service-dropdown");
+  let isOpen = clickedDropdown.classList.contains("open");
 
   allCards.forEach(c => {
     let dropdown = c.querySelector(".service-dropdown");
-    if (c === card) {
-      let isOpen = dropdown.classList.contains("open");
-      dropdown.classList.toggle("open", !isOpen);
 
+    if (c === card) {
+      dropdown.classList.toggle("open", !isOpen);
       if (isMobile) {
-        c.classList.remove("dimmed");
+        c.classList.toggle("transparent", !isOpen);
       }
     } else {
+      dropdown.classList.remove("open");
       if (isMobile) {
         c.classList.add("dimmed");
+        c.classList.remove("transparent");
       }
-      c.querySelector(".service-dropdown").classList.remove("open");
     }
   });
+
+  // If closing, reset all
+  if (isOpen && isMobile) {
+    allCards.forEach(c => {
+      c.classList.remove("dimmed", "transparent");
+    });
+  }
 }
 </script>
 
