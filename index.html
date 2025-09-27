@@ -84,7 +84,7 @@ nav a {
 
 /* Hero Section */
 .hero {
-  padding: 4rem 2rem;
+  padding: 2rem;
   text-align: center;
   color: white;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
@@ -129,6 +129,8 @@ nav a {
   padding: 2rem;
   max-width: 1000px;
   margin: auto;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
 }
 
 .services {
@@ -139,10 +141,33 @@ nav a {
 }
 
 .service-card {
-  background: rgba(255,255,255,0.9);
+  background: white;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Section Dropdowns */
+.section-dropdown {
+  display: none;
+  padding: 0.8rem;
+  background: rgba(0,0,0,0.05);
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.section-dropdown-toggle {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.section-dropdown-toggle:hover {
+  background: #0841b0;
 }
 
 /* Footer */
@@ -238,11 +263,36 @@ footer {
 </section>
 
 <section id="services" class="section">
+  <h3>Services</h3>
   <div class="services">
-    <div class="service-card"><h4>Hall of Fame</h4></div>
-    <div class="service-card"><h4>Refund Tracking Portal</h4></div>
-    <div class="service-card"><h4>Live Slots</h4></div>
-    <div class="service-card"><h4>Issues Regarding Refund</h4></div>
+    <div class="service-card">
+      <h4>Hall of Fame</h4>
+      <button class="section-dropdown-toggle">Details ▼</button>
+      <div class="section-dropdown">
+        <p>This section contains detailed information about Hall of Fame.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Refund Tracking Portal</h4>
+      <button class="section-dropdown-toggle">Details ▼</button>
+      <div class="section-dropdown">
+        <p>This section contains details about the refund tracking process.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Live Slots</h4>
+      <button class="section-dropdown-toggle">Details ▼</button>
+      <div class="section-dropdown">
+        <p>Live slots details and updates.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <h4>Issues Regarding Refund</h4>
+      <button class="section-dropdown-toggle">Details ▼</button>
+      <div class="section-dropdown">
+        <p>Information on resolving refund issues.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -260,6 +310,13 @@ footer {
 function toggleMenu() {
   document.getElementById('nav-list').classList.toggle('active');
 }
+
+document.querySelectorAll('.section-dropdown-toggle').forEach(button => {
+  button.addEventListener('click', () => {
+    const dropdown = button.nextElementSibling;
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  });
+});
 </script>
 
 </body>
