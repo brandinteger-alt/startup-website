@@ -51,10 +51,11 @@ nav a {
   padding: 8px;
 }
 
+/* Desktop dropdowns */
 .dropdown {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   min-width: 150px;
@@ -75,10 +76,13 @@ nav a {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.dropdown-parent:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+/* Hover for desktop dropdown */
+@media (min-width: 769px) {
+  .dropdown-parent:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 }
 
 /* Hero Section */
@@ -104,7 +108,7 @@ nav a {
 }
 
 .hero-btn {
-  min-width: 120px;
+  width: 140px;
   padding: 0.8rem;
   border: none;
   background: white;
@@ -143,6 +147,7 @@ nav a {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
   position: relative;
+  transition: opacity 0.3s ease;
 }
 
 .service-dropdown {
@@ -185,15 +190,19 @@ footer {
     flex-direction: column;
     background: rgba(13, 110, 253, 0.95);
     position: fixed;
-    right: 0;
+    right: -250px;
     top: 60px;
     width: 200px;
     padding: 10px;
-    display: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: calc(100% - 60px);
+    transition: right 0.3s ease;
   }
 
   nav ul.active {
-    display: flex;
+    right: 0;
   }
 
   nav li {
@@ -223,7 +232,7 @@ footer {
 <body>
 
 <header>
-  <div style="display:flex;align-items:center;">
+  <div style="display:flex;align-items:center;gap:10px;">
     <img src="assets/bg.png" alt="Logo" style="height:40px;">
     <h1>BRAND INTEGER</h1>
   </div>
