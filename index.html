@@ -69,6 +69,21 @@ nav li {
   white-space: nowrap;
 }
 
+/* Dropdown overlay effect */
+.dropdown-overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+.dropdown-overlay.show {
+  display: block;
+}
+
 /* Mobile menu toggle */
 .menu-toggle {
   display: none;
@@ -201,6 +216,8 @@ nav li {
   </nav>
 </header>
 
+<div class="dropdown-overlay" id="dropdown-overlay"></div>
+
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
   <div class="buttons">
@@ -240,6 +257,7 @@ nav li {
 const menuToggle = document.getElementById("menu-toggle");
 const navList = document.getElementById("nav-list");
 const dropdownParents = document.querySelectorAll(".dropdown-parent");
+const overlay = document.getElementById("dropdown-overlay");
 
 menuToggle.addEventListener("click", () => {
   navList.classList.toggle("show");
@@ -250,8 +268,16 @@ dropdownParents.forEach(parent => {
     if (window.innerWidth <= 768) {
       e.preventDefault();
       parent.classList.toggle("active");
+      parent.querySelector(".dropdown").classList.toggle("show");
+      overlay.classList.toggle("show");
     }
   });
+});
+
+overlay.addEventListener("click", () => {
+  document.querySelectorAll(".dropdown").forEach(dd => dd.classList.remove("show"));
+  document.querySelectorAll(".dropdown-parent").forEach(li => li.classList.remove("active"));
+  overlay.classList.remove("show");
 });
 </script>
 
