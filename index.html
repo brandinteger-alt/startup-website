@@ -75,7 +75,7 @@ nav a {
 }
 
 .hero-btn {
-  padding: 0.6rem 1rem; /* Reduced size */
+  padding: 0.8rem 1.5rem; /* Slightly longer & equal */
   border: none;
   background: white;
   color: #0d6efd;
@@ -85,6 +85,8 @@ nav a {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: background 0.3s, transform 0.2s;
+  min-width: 130px;
+  text-align: center;
 }
 
 .hero-btn:hover {
@@ -113,7 +115,7 @@ nav a {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   cursor: pointer;
   position: relative;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 .service-card:hover {
@@ -131,13 +133,15 @@ nav a {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
+  transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(-10px);
   z-index: 10;
 }
 
 .service-dropdown.open {
   max-height: 500px;
   opacity: 1;
+  transform: translateY(0);
 }
 
 .service-dropdown a {
@@ -285,13 +289,17 @@ function toggleMenu() {
 }
 
 function toggleDropdown(card) {
-  let dropdowns = document.querySelectorAll(".service-dropdown");
-  dropdowns.forEach(d => {
-    if (d !== card.querySelector(".service-dropdown")) {
-      d.classList.remove("open");
+  let allCards = document.querySelectorAll(".service-card");
+  allCards.forEach(c => {
+    let dropdown = c.querySelector(".service-dropdown");
+    if (c === card) {
+      dropdown.classList.toggle("open");
+      c.style.opacity = "1";
+    } else {
+      dropdown.classList.remove("open");
+      c.style.opacity = "0.5";
     }
   });
-  card.querySelector(".service-dropdown").classList.toggle("open");
 }
 </script>
 
