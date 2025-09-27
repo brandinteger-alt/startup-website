@@ -9,171 +9,170 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Poppins', sans-serif;
-  color: #333;
-  background-color: #f5f6fa;
-  line-height: 1.6;
+  background: #f0f4ff;
 }
 
 /* Header */
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: #0d6efd;
-  color: white;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
-header h1 { font-size: 1.7rem; font-weight: 600; }
-header img { height: 40px; margin-right: 10px; }
+
+header h1 {
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+nav {
+  position: relative;
+}
 
 nav ul {
-  list-style: none;
   display: flex;
   gap: 20px;
+  list-style: none;
 }
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
+
 nav li {
   position: relative;
 }
 
-/* Dropdown styling */
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px;
+}
+
 .dropdown {
-  display: none;
-  flex-direction: column;
   position: absolute;
   top: 100%;
   right: 0;
-  background: rgba(13, 110, 253, 0.95);
-  border-radius: 6px;
-  padding: 0.5rem 0;
-  min-width: 200px;
-  z-index: 1001;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 5px;
+  min-width: 150px;
   opacity: 0;
+  visibility: hidden;
   transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.dropdown.show {
-  display: flex;
-  opacity: 1;
-  transform: translateY(0);
-}
-.dropdown a {
-  padding: 10px 15px;
-  white-space: nowrap;
-}
-
-/* Dropdown overlay effect */
-.dropdown-overlay {
-  display: none;
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 60px);
-  background: rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
   z-index: 999;
 }
-.dropdown-overlay.show {
+
+.dropdown a {
   display: block;
+  padding: 10px;
+  color: white;
 }
 
-/* Mobile menu toggle */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
+.dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background: white;
-  border-radius: 2px;
+
+.dropdown-parent:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 /* Hero Section */
 .hero {
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7));
   color: white;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.85), rgba(108, 99, 255, 0.85)),
+              url('assets/bg.png') no-repeat center center;
+  background-size: cover;
 }
-.hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+
+.hero h2 {
+  font-size: 2.8rem;
+}
+
 .hero .buttons {
   display: flex;
   gap: 20px;
   justify-content: center;
+  margin-top: 2rem;
   flex-wrap: wrap;
 }
-.hero button {
-  padding: 1rem 2.2rem;
+
+.hero-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 1rem;
   border: none;
   background: white;
   color: #0d6efd;
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer;
   border-radius: 50px;
+  cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s, transform 0.2s;
 }
-.hero button:hover {
+
+.hero-btn:hover {
+  transform: scale(1.05);
   background: #f0f0f0;
 }
 
 /* Services Section */
 .section {
   padding: 4rem 2rem;
-  text-align: center;
+  max-width: 1100px;
+  margin: auto;
 }
+
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  margin-top: 2rem;
 }
+
 .service-card {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-.service-card h4 { margin-bottom: 1rem; color: #0d6efd; font-size: 1.3rem; }
+
+/* Footer */
+footer {
+  background: #0d6efd;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 0;
     background: rgba(13, 110, 253, 0.9);
-    display: none;
+    position: fixed;
+    right: 0;
+    top: 60px;
     width: 200px;
-    border-radius: 8px;
-    padding: 10px 0;
+    padding: 10px;
+    display: none;
   }
-  nav ul.show {
-    display: flex;
-  }
-  nav li.active > .dropdown {
-    display: flex;
-    flex-direction: column;
-    animation: fadeSlideDown 0.3s ease forwards;
-  }
-  .menu-toggle {
-    display: flex;
-  }
-}
 
-@keyframes fadeSlideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  nav ul.active {
+    display: flex;
+  }
+
+  nav li {
+    margin-bottom: 10px;
+  }
 }
 </style>
 </head>
@@ -181,13 +180,8 @@ nav li {
 
 <header>
   <div style="display:flex;align-items:center;">
-    <img src="assets/bg.png" alt="Logo">
+    <img src="assets/bg.png" alt="Logo" style="height:40px;">
     <h1>BRAND INTEGER</h1>
-  </div>
-  <div class="menu-toggle" id="menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
   </div>
   <nav>
     <ul id="nav-list">
@@ -206,40 +200,26 @@ nav li {
         </div>
       </li>
       <li class="dropdown-parent">
-        <a href="#">Contact Us</a>
-        <div class="dropdown">
-          <a href="#contact">Email</a>
-          <a href="#phone">Phone</a>
-        </div>
+        <a href="#contact">Contact Us</a>
       </li>
     </ul>
   </nav>
 </header>
 
-<div class="dropdown-overlay" id="dropdown-overlay"></div>
-
 <section class="hero">
   <h2>Your one-stop solution for savings</h2>
   <div class="buttons">
-    <button>Get Started</button>
-    <button>Rules</button>
+    <button class="hero-btn">Get Started</button>
+    <button class="hero-btn">Rules</button>
   </div>
 </section>
 
 <section id="services" class="section">
   <div class="services">
-    <div class="service-card">
-      <h4>Hall of Fame</h4>
-    </div>
-    <div class="service-card">
-      <h4>Refund Tracking Portal</h4>
-    </div>
-    <div class="service-card">
-      <h4>Live Slots</h4>
-    </div>
-    <div class="service-card">
-      <h4>Issues Regarding Refund</h4>
-    </div>
+    <div class="service-card"><h4>Hall of Fame</h4></div>
+    <div class="service-card"><h4>Refund Tracking Portal</h4></div>
+    <div class="service-card"><h4>Live Slots</h4></div>
+    <div class="service-card"><h4>Issues Regarding Refund</h4></div>
   </div>
 </section>
 
@@ -252,34 +232,6 @@ nav li {
 <footer>
   <p>&copy; 2025 BRAND INTEGER. All rights reserved.</p>
 </footer>
-
-<script>
-const menuToggle = document.getElementById("menu-toggle");
-const navList = document.getElementById("nav-list");
-const dropdownParents = document.querySelectorAll(".dropdown-parent");
-const overlay = document.getElementById("dropdown-overlay");
-
-menuToggle.addEventListener("click", () => {
-  navList.classList.toggle("show");
-});
-
-dropdownParents.forEach(parent => {
-  parent.addEventListener("click", (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      parent.classList.toggle("active");
-      parent.querySelector(".dropdown").classList.toggle("show");
-      overlay.classList.toggle("show");
-    }
-  });
-});
-
-overlay.addEventListener("click", () => {
-  document.querySelectorAll(".dropdown").forEach(dd => dd.classList.remove("show"));
-  document.querySelectorAll(".dropdown-parent").forEach(li => li.classList.remove("active"));
-  overlay.classList.remove("show");
-});
-</script>
 
 </body>
 </html>
