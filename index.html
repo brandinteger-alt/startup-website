@@ -1,47 +1,349 @@
-<script>
-function toggleDropdown(card) {
-  let allCards = document.querySelectorAll(".service-card");
-  let isMobile = window.innerWidth <= 768;
-  let clickedDropdown = card.querySelector(".service-dropdown");
-  let isOpen = clickedDropdown.classList.contains("open");
-
-  allCards.forEach(c => {
-    let dropdown = c.querySelector(".service-dropdown");
-
-    if (c === card) {
-      dropdown.classList.toggle("open", !isOpen);
-    } else {
-      dropdown.classList.remove("open");
-    }
-  });
-
-  if (isMobile) {
-    if (!isOpen) {
-      // Section clicked → apply transparency to everything beneath
-      let allSections = document.querySelectorAll(".service-card");
-      let clickedIndex = Array.from(allSections).indexOf(card);
-
-      allSections.forEach((c, idx) => {
-        if (idx > clickedIndex) {
-          c.classList.add("transparent-below");
-        } else {
-          c.classList.remove("transparent-below");
-        }
-      });
-    } else {
-      // Close dropdown → reset
-      document.querySelectorAll(".service-card").forEach(c => {
-        c.classList.remove("transparent-below");
-      });
-    }
-  }
-}
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BRAND INTEGER</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d6efd;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+nav {
+  position: relative;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+nav li {
+  position: relative;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  min-width: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px;
+  color: white;
+}
+
+.dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-parent:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hero Section */
+.hero {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: white;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
+              url('assets/bg.png') no-repeat center center;
+  background-size: cover;
+}
+
+.hero h2 {
+  font-size: 2rem;
+}
+
+.hero .buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.8rem;
+  border: none;
+  background: white;
+  color: #0d6efd;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.hero-btn:hover {
+  transform: scale(1.05);
+  background: #f0f0f0;
+}
+
+/* Services Section */
+.section {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.service-card {
+  background: rgba(255,255,255,0.9);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  cursor: pointer;
+  position: relative;
+}
+
+.service-dropdown {
+  display: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.service-dropdown a {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: #0d6efd;
+}
+
+.service-dropdown a:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* Footer */
+footer {
+  background: #0d6efd;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
 @media (max-width: 768px) {
-  .service-card.transparent-below {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  nav ul {
+    flex-direction: column;
+    background: rgba(13, 110, 253, 0.95);
+    position: fixed;
+    right: 0;
+    top: 60px;
+    width: 200px;
+    padding: 10px;
+    display: none;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav li {
+    margin-bottom: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    color: white;
+  }
+
+  .dropdown {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    padding-left: 10px;
+  }
+
+  .dropdown a {
+    color: white;
+  }
+
+  .service-card.active .service-dropdown {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+
+  .service-card.inactive {
+    opacity: 0.5;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;">
+    <img src="assets/bg.png" alt="Logo" style="height:40px;">
+    <h1>BRAND INTEGER</h1>
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <nav>
+    <ul id="nav-list">
+      <li class="dropdown-parent">
+        <a href="#">FAQ</a>
+        <div class="dropdown">
+          <a href="#faq1">FAQ 1</a>
+          <a href="#faq2">FAQ 2</a>
+        </div>
+      </li>
+      <li class="dropdown-parent">
+        <a href="#">Useful Links</a>
+        <div class="dropdown">
+          <a href="#link1">Link 1</a>
+          <a href="#link2">Link 2</a>
+        </div>
+      </li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Your one-stop solution for savings</h2>
+  <div class="buttons">
+    <button class="hero-btn">Get Started</button>
+    <button class="hero-btn">Rules</button>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="services">
+    <div class="service-card" onclick="toggleSection(this)">
+      <h4>Hall of Fame</h4>
+      <div class="service-dropdown">
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
+      </div>
+    </div>
+    <div class="service-card" onclick="toggleSection(this)">
+      <h4>Refund Tracking Portal</h4>
+      <div class="service-dropdown">
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
+      </div>
+    </div>
+    <div class="service-card" onclick="toggleSection(this)">
+      <h4>Live Slots</h4>
+      <div class="service-dropdown">
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
+      </div>
+    </div>
+    <div class="service-card" onclick="toggleSection(this)">
+      <h4>Issues Regarding Refund</h4>
+      <div class="service-dropdown">
+        <a href="#">Type 1</a>
+        <a href="#">Type 2</a>
+        <a href="#">Type 3</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section contact">
+  <h3>Contact Us</h3>
+  <p>Email: brandinteger@gmail.com</p>
+  <p>Phone: +91-9930977520</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 BRAND INTEGER. All rights reserved.</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('nav-list').classList.toggle('active');
+}
+
+function toggleSection(card) {
+  const isMobile = window.innerWidth <= 768;
+  if (!isMobile) return;
+
+  const allCards = document.querySelectorAll('.service-card');
+  const isActive = card.classList.contains('active');
+
+  allCards.forEach(c => {
+    c.classList.remove('active');
+    c.classList.remove('inactive');
+  });
+
+  if (!isActive) {
+    card.classList.add('active');
+    allCards.forEach(c => {
+      if (c !== card) c.classList.add('inactive');
+    });
+  }
+}
+</script>
+
+</body>
+</html>
