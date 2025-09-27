@@ -76,14 +76,19 @@ nav a:hover { opacity: 0.8; }
   position: absolute;
   top: 100%;
   left: 0;
-  background: rgba(13, 110, 253, 0.9);
+  background: rgba(13, 110, 253, 0.95);
   border-radius: 6px;
   padding: 0.5rem 0;
   min-width: 200px;
   z-index: 1001;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-nav li:hover > .dropdown {
+.dropdown.show {
   display: flex;
+  opacity: 1;
+  transform: translateY(0);
 }
 .dropdown a {
   padding: 10px 15px;
@@ -186,6 +191,7 @@ footer {
     display: none;
     border-radius: 8px;
     padding: 10px 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   nav ul.show {
     display: flex;
@@ -194,16 +200,30 @@ footer {
     width: 100%;
     position: relative;
   }
-  nav li:hover > .dropdown {
+  nav li > .dropdown {
+    position: relative;
+    top: 0;
+    left: 0;
+    background: rgba(13, 110, 253, 0.95);
+    border-radius: 0;
+    padding: 0;
+    transform: translateY(0);
+    opacity: 1;
     display: none;
   }
   nav li.active > .dropdown {
     display: flex;
     flex-direction: column;
+    animation: fadeSlideDown 0.3s ease forwards;
   }
   .menu-toggle {
     display: flex;
   }
+}
+
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -235,13 +255,11 @@ console.log(`${brand} - ${mission}`);
   </div>
   <nav>
     <ul id="nav-list">
-      <li>
+      <li id="dropdown-menu">
         <a href="#">Menu</a>
         <div class="dropdown">
-          <a href="#hall">Hall of Fame</a>
-          <a href="#refund">Refund Tracking Portal</a>
-          <a href="#slots">Live Slots</a>
-          <a href="#issues">Issues Regarding Refund</a>
+          <a href="#faq">FAQ</a>
+          <a href="#useful">Useful Links</a>
         </div>
       </li>
       <li><a href="#contact">Contact Us</a></li>
@@ -284,8 +302,17 @@ console.log(`${brand} - ${mission}`);
 <script>
 const menuToggle = document.getElementById("menu-toggle");
 const navList = document.getElementById("nav-list");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
 menuToggle.addEventListener("click", () => {
   navList.classList.toggle("show");
+});
+
+dropdownMenu.addEventListener("click", (e) => {
+  if (window.innerWidth <= 768) {
+    e.preventDefault();
+    dropdownMenu.classList.toggle("active");
+  }
 });
 </script>
 
