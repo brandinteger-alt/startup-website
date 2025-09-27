@@ -31,27 +31,6 @@ header h1 {
   margin-left: 10px;
 }
 
-nav {
-  position: relative;
-}
-
-nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-nav li {
-  position: relative;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px;
-}
-
 /* Hero Section */
 .hero {
   padding: 4rem 2rem;
@@ -71,11 +50,10 @@ nav a {
   gap: 20px;
   justify-content: center;
   margin-top: 1.5rem;
-  flex-wrap: wrap;
 }
 
 .hero-btn {
-  padding: 0.8rem 1.5rem; /* Slightly longer & equal */
+  padding: 0.8rem 1.5rem;
   border: none;
   background: white;
   color: #0d6efd;
@@ -83,10 +61,9 @@ nav a {
   font-weight: 600;
   border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: background 0.3s, transform 0.2s;
-  min-width: 130px;
+  min-width: 140px;
   text-align: center;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .hero-btn:hover {
@@ -128,7 +105,7 @@ nav a {
   top: 100%;
   left: 0;
   width: 100%;
-  background: linear-gradient(135deg, rgba(13,110,253,0.9), rgba(108,99,255,0.9));
+  background: linear-gradient(135deg, rgba(13,110,253,0.8), rgba(108,99,255,0.8));
   border-radius: 0 0 10px 10px;
   overflow: hidden;
   max-height: 0;
@@ -150,7 +127,6 @@ nav a {
   color: white;
   text-decoration: none;
   border-bottom: 1px solid rgba(255,255,255,0.2);
-  transition: background 0.3s;
 }
 
 .service-dropdown a:hover {
@@ -209,20 +185,6 @@ footer {
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <nav>
     <ul id="nav-list">
-      <li class="dropdown-parent">
-        <a href="#">FAQ</a>
-        <div class="dropdown">
-          <a href="#faq1">FAQ 1</a>
-          <a href="#faq2">FAQ 2</a>
-        </div>
-      </li>
-      <li class="dropdown-parent">
-        <a href="#">Useful Links</a>
-        <div class="dropdown">
-          <a href="#link1">Link 1</a>
-          <a href="#link2">Link 2</a>
-        </div>
-      </li>
       <li><a href="#contact">Contact Us</a></li>
     </ul>
   </nav>
@@ -293,11 +255,12 @@ function toggleDropdown(card) {
   allCards.forEach(c => {
     let dropdown = c.querySelector(".service-dropdown");
     if (c === card) {
-      dropdown.classList.toggle("open");
+      let isOpen = dropdown.classList.contains("open");
+      dropdown.classList.toggle("open", !isOpen);
       c.style.opacity = "1";
     } else {
-      dropdown.classList.remove("open");
-      c.style.opacity = "0.5";
+      c.style.opacity = "0";
+      c.querySelector(".service-dropdown").classList.remove("open");
     }
   });
 }
