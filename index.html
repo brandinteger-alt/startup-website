@@ -28,7 +28,6 @@ header h1 {
   color: white;
   font-size: 1.7rem;
   font-weight: 600;
-  margin-left: 10px;
 }
 
 nav {
@@ -105,8 +104,7 @@ nav a {
 }
 
 .hero-btn {
-  flex: 1;
-  min-width: 140px;
+  min-width: 120px;
   padding: 0.8rem;
   border: none;
   background: white;
@@ -153,6 +151,7 @@ nav a {
   padding: 10px;
   border-radius: 5px;
   margin-top: 10px;
+  animation: slideDown 0.3s ease forwards;
 }
 
 .service-dropdown a {
@@ -206,29 +205,15 @@ footer {
     color: white;
   }
 
-  .dropdown {
-    position: relative;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    padding-left: 10px;
-  }
-
-  .dropdown a {
-    color: white;
-  }
-
   .service-card.active .service-dropdown {
     display: block;
-    animation: fadeIn 0.3s ease-in-out forwards;
   }
 
   .service-card.inactive {
     opacity: 0.5;
   }
 
-  @keyframes fadeIn {
+  @keyframes slideDown {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
