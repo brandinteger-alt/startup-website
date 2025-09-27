@@ -12,29 +12,6 @@ body {
   color: #333;
   background-color: #f5f6fa;
   line-height: 1.6;
-  position: relative;
-}
-
-/* Code background effect */
-.code-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(0, 0, 0, 0.05);
-  font-family: monospace;
-  font-size: 14px;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  white-space: pre-wrap;
-  padding: 2rem;
-}
-
-body > * {
-  position: relative;
-  z-index: 1;
 }
 
 /* Header */
@@ -48,14 +25,10 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 header h1 { font-size: 1.7rem; font-weight: 600; }
 header img { height: 40px; margin-right: 10px; }
 
-nav {
-  position: relative;
-}
 nav ul {
   list-style: none;
   display: flex;
@@ -65,11 +38,12 @@ nav a {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  transition: opacity 0.3s;
 }
-nav a:hover { opacity: 0.8; }
+nav li {
+  position: relative;
+}
 
-/* Dropdown */
+/* Dropdown styling */
 .dropdown {
   display: none;
   flex-direction: column;
@@ -113,15 +87,10 @@ nav a:hover { opacity: 0.8; }
 .hero {
   padding: 6rem 2rem;
   text-align: center;
-  background: 
-    url('assets/bg.png') no-repeat center center,
-    linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7));
-  background-size: contain;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7));
   color: white;
-  position: relative;
 }
 .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; }
-.hero p { font-size: 1.2rem; margin-bottom: 2rem; }
 .hero button {
   padding: 1rem 2.2rem;
   border: none;
@@ -132,10 +101,8 @@ nav a:hover { opacity: 0.8; }
   cursor: pointer;
   border-radius: 50px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s, background 0.3s;
 }
 .hero button:hover {
-  transform: scale(1.05);
   background: #f0f0f0;
 }
 
@@ -143,41 +110,19 @@ nav a:hover { opacity: 0.8; }
 .section {
   padding: 4rem 2rem;
   text-align: center;
-  max-width: 1100px;
-  margin: auto;
 }
-.section h3 { margin-bottom: 1.5rem; color: #0d6efd; font-size: 2.2rem; }
-.section p { color: #555; font-size: 1.05rem; }
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 .service-card {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 .service-card h4 { margin-bottom: 1rem; color: #0d6efd; font-size: 1.3rem; }
-.service-card p { color: #666; }
-
-/* Contact Section */
-.contact p { margin: 0.5rem 0; color: #555; }
-
-/* Footer */
-footer {
-  background: #0d6efd;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -186,30 +131,14 @@ footer {
     position: absolute;
     top: 60px;
     right: 0;
-    width: 200px;
     background: rgba(13, 110, 253, 0.9);
     display: none;
+    width: 200px;
     border-radius: 8px;
     padding: 10px 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   nav ul.show {
     display: flex;
-  }
-  nav li {
-    width: 100%;
-    position: relative;
-  }
-  nav li > .dropdown {
-    position: relative;
-    top: 0;
-    left: 0;
-    background: rgba(13, 110, 253, 0.95);
-    border-radius: 0;
-    padding: 0;
-    transform: translateY(0);
-    opacity: 1;
-    display: none;
   }
   nav li.active > .dropdown {
     display: flex;
@@ -229,23 +158,9 @@ footer {
 </head>
 <body>
 
-<!-- CODE BACKGROUND -->
-<div class="code-bg">
-<pre>
-function helloWorld() {
-  console.log("Hello, BRAND INTEGER!");
-}
-helloWorld();
-
-let brand = "BRAND INTEGER";
-let mission = "Innovate and Simplify";
-console.log(`${brand} - ${mission}`);
-</pre>
-</div>
-
 <header>
   <div style="display:flex;align-items:center;">
-    <img src="assets/bg.png" alt="Logo" style="height:40px; margin-right:10px;">
+    <img src="assets/bg.png" alt="Logo">
     <h1>BRAND INTEGER</h1>
   </div>
   <div class="menu-toggle" id="menu-toggle">
@@ -255,14 +170,27 @@ console.log(`${brand} - ${mission}`);
   </div>
   <nav>
     <ul id="nav-list">
-      <li id="dropdown-menu">
-        <a href="#">Menu</a>
+      <li class="dropdown-parent">
+        <a href="#">FAQ</a>
         <div class="dropdown">
-          <a href="#faq">FAQ</a>
-          <a href="#useful">Useful Links</a>
+          <a href="#faq1">FAQ 1</a>
+          <a href="#faq2">FAQ 2</a>
         </div>
       </li>
-      <li><a href="#contact">Contact Us</a></li>
+      <li class="dropdown-parent">
+        <a href="#">Useful Links</a>
+        <div class="dropdown">
+          <a href="#link1">Link 1</a>
+          <a href="#link2">Link 2</a>
+        </div>
+      </li>
+      <li class="dropdown-parent">
+        <a href="#">Contact Us</a>
+        <div class="dropdown">
+          <a href="#contact">Email</a>
+          <a href="#phone">Phone</a>
+        </div>
+      </li>
     </ul>
   </nav>
 </header>
@@ -302,17 +230,19 @@ console.log(`${brand} - ${mission}`);
 <script>
 const menuToggle = document.getElementById("menu-toggle");
 const navList = document.getElementById("nav-list");
-const dropdownMenu = document.getElementById("dropdown-menu");
+const dropdownParents = document.querySelectorAll(".dropdown-parent");
 
 menuToggle.addEventListener("click", () => {
   navList.classList.toggle("show");
 });
 
-dropdownMenu.addEventListener("click", (e) => {
-  if (window.innerWidth <= 768) {
-    e.preventDefault();
-    dropdownMenu.classList.toggle("active");
-  }
+dropdownParents.forEach(parent => {
+  parent.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      parent.classList.toggle("active");
+    }
+  });
 });
 </script>
 
