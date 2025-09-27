@@ -28,6 +28,7 @@ header h1 {
   color: white;
   font-size: 1.7rem;
   font-weight: 600;
+  margin-left: 10px;
 }
 
 nav {
@@ -83,7 +84,7 @@ nav a {
 
 /* Hero Section */
 .hero {
-  padding: 3rem 2rem;
+  padding: 3rem 2rem; /* Reduced length */
   text-align: center;
   color: white;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.7), rgba(108, 99, 255, 0.7)),
@@ -99,12 +100,13 @@ nav a {
   display: flex;
   gap: 20px;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   flex-wrap: wrap;
 }
 
 .hero-btn {
-  min-width: 120px;
+  flex: 1;
+  min-width: 140px;
   padding: 0.8rem;
   border: none;
   background: white;
@@ -141,28 +143,27 @@ nav a {
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  cursor: pointer;
   position: relative;
+  cursor: pointer;
+}
+
+.service-card.inactive {
+  opacity: 0.5;
 }
 
 .service-dropdown {
   display: none;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
   padding: 10px;
+  background: rgba(255,255,255,0.95);
   border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   margin-top: 10px;
-  animation: slideDown 0.3s ease forwards;
+  animation: fadeIn 0.3s ease forwards;
 }
 
-.service-dropdown a {
-  display: block;
-  padding: 5px;
-  text-decoration: none;
-  color: #0d6efd;
-}
-
-.service-dropdown a:hover {
-  background: rgba(0,0,0,0.05);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Footer */
@@ -205,17 +206,41 @@ footer {
     color: white;
   }
 
-  .service-card.active .service-dropdown {
+  .dropdown {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    padding-left: 10px;
+  }
+
+  .dropdown a {
+    color: white;
+  }
+
+  .service-dropdown {
     display: block;
   }
+}
 
-  .service-card.inactive {
-    opacity: 0.5;
+/* Desktop hover dropdown */
+@media (min-width: 769px) {
+  .service-card .service-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.95);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
   }
 
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+  .service-card:hover .service-dropdown {
+    display: block;
   }
 }
 </style>
@@ -311,7 +336,7 @@ function toggleMenu() {
 
 function toggleSection(card) {
   const isMobile = window.innerWidth <= 768;
-  if (!isMobile) return;
+  if (!isMobile) return; // desktop uses hover
 
   const allCards = document.querySelectorAll('.service-card');
   const isActive = card.classList.contains('active');
